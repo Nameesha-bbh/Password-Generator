@@ -6,6 +6,14 @@ const numbersEl = document.getElementById('numbers');
 const symbolsEl = document.getElementById('symbols');
 const generateEl = document.getElementById('generate');
 const clipboard = document.getElementById('clipboard');
+var finalPassword = '';
+var strength = {
+	0: "Worst",
+	1: "Bad",
+	2: "Weak",
+	3: "Good",
+	4: "Strong"
+}
 
 const randomFunc = {
 	lower: getRandomLower,
@@ -13,6 +21,9 @@ const randomFunc = {
 	number: getRandomNumber,
 	symbol: getRandomSymbol
 }
+
+
+
 
 clipboard.addEventListener('click', () => {
 	const textarea = document.createElement('textarea');
@@ -33,6 +44,7 @@ clipboard.addEventListener('click', () => {
 
 generate.addEventListener('click', () => {
     document.querySelector('.after').innerText = '';
+	document.querySelector('.stre').innerText = '';
 	const length = +lengthEl.value;
 	const hasLower = lowercaseEl.checked;
 	const hasUpper = uppercaseEl.checked;
@@ -61,10 +73,21 @@ function generatePassword(lower, upper, number, symbol, length) {
 		});
 	}
 	
-	const finalPassword = generatedPassword.slice(0, length);
+	finalPassword = generatedPassword.slice(0, length);
 	
 	return finalPassword;
 }
+document.getElementById('check').addEventListener('click',checkStrength);
+function checkStrength(e){
+	if(finalPassword === '')
+	{
+		document.querySelector('.stre').innerText = "Please generate a password";
+	}else{
+		var resStrength = zxcvbn(finalPassword);
+		document.querySelector('.stre').innerText = "Strength : "+strength[resStrength.score];
+	}
+}
+
 
 function getRandomLower() {
 	return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
