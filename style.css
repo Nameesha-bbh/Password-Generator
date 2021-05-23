@@ -16,6 +16,11 @@ body {
 	min-height: 100vh;
 }
 
+.stre{
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 500;
+	font-size: 18px;
+}
 .after{
 	font-size: 25px;
 	font-family: 'Oswald', sans-serif;
